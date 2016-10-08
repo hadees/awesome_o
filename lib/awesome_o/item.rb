@@ -1,4 +1,4 @@
-module Cartman
+module AwesomeO
   class Item
     def initialize(item_id, cart_id, data)
       @id = item_id
@@ -11,8 +11,8 @@ module Cartman
     end
 
     def cost
-      unit_cost = (@data.fetch(Cartman.config.unit_cost_field).to_f * 100).to_i
-      quantity = @data.fetch(Cartman.config.quantity_field).to_i
+      unit_cost = (@data.fetch(AwesomeO.config.unit_cost_field).to_f * 100).to_i
+      quantity = @data.fetch(AwesomeO.config.quantity_field).to_i
       (unit_cost * quantity) / 100.0
     end
 
@@ -34,7 +34,7 @@ module Cartman
     end
 
     def _key
-      "cartman:line_item:#{@id}"
+      "awesome_o:line_item:#{@id}"
     end
 
     def _version
@@ -46,7 +46,7 @@ module Cartman
     end
 
     def method_missing(method, *args, &block)
-      if method.to_s.end_with?("=")
+      if method.to_s.end_with?('=')
         redis.hset _key, method[0..-2], args[0].to_s
         @data.store(method[0..-2].to_sym, args[0].to_s)
         version = touch
@@ -59,13 +59,13 @@ module Cartman
     end
 
     def respond_to_missing?(method, include_private = false)
-      method.to_s.end_with?("=") || @data.keys.include?(method) || super
+      method.to_s.end_with?('=') || @data.keys.include?(method) || super
     end
 
     private
 
     def redis
-      Cartman.config.redis
+      AwesomeO.config.redis
     end
   end
 end

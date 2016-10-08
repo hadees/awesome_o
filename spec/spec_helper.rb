@@ -6,4 +6,4 @@ unless Kernel.respond_to?(:require_relative)
   end
 end
 
-require_relative "../lib/cartman"
+require_relative '../lib/awesome_o'

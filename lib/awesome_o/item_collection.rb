@@ -1,6 +1,6 @@
 require 'delegate'
 
-module Cartman
+module AwesomeO
   class ItemCollection < DelegateClass(Array)
     include Enumerable
 
@@ -14,6 +14,5 @@ module Cartman
         yield result, eval(result.type).send(:find, result.id)
       end
     end
-
   end
 end

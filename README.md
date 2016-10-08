@@ -1,15 +1,15 @@
-# Cartman
-[![Build Status](https://secure.travis-ci.org/UpTrendingLLC/cartman.png)](http://travis-ci.org/UpTrendingLLC/cartman)
+# AwesomeO
+[![Build Status](https://travis-ci.org/hadees/awesome_o.svg?branch=master)](https://travis-ci.org/hadees/awesome_o)
 
-![](http://blog.brightcove.com/sites/all/uploads/eric_theodore_cartman_southpark.jpg)
+![](http://i.imgur.com/rziNSZZ.png)
 
-Cartman is a framework agnostic, redis backed, cart system.  It is not a POS, or a full fledged ecommerce system.  Just the cart, man.
+AwesomeO is a framework agnostic, redis backed, cart system.  It is not a POS, or a full fledged ecommerce system.  Just the cart, man.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'cartman'
+    gem 'awesome_o'
 
 And then execute:
 
@@ -17,15 +17,15 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install cartman
+    $ gem install awesome_o
 
 ## Setup
 
-Cartman has a few (read 3) configuration options you can set, most likely in an initializer file.  Here's an example configuration:
+AwesomeO has a few (read 3) configuration options you can set, most likely in an initializer file.  Here's an example configuration:
 
 ```ruby
-# config/initializers/cartman.rb
-Cartman.config do |c|
+# config/initializers/awesome_o.rb
+AwesomeO.config do |c|
   c.cart_expires_in = 604800 # one week, in seconds.  This is the default
   c.unit_cost_field = :unit_cost # for cart totaling
   c.quantity_field = :quantity # for quantity totaling
@@ -34,15 +34,15 @@ end
 ```
 
 - The `cart_expires_in=` setting will let you set how long a cart should live.  If no items are added to the cart before the time expires, the cart will be cleared.  If you want to disable cart expiration, set this to `-1`.
-- `unit_cost_field=` lets you tell Cartman where you're storing the unit_cost of each item, so that you can use the `cost` method on the item, and the `total` method on `Cart`.
-- `quantity_field=` lets you tell Cartman where you're storing the quantity of each item.  The `Item#cost` method uses this along with the `unit_cost` field to determine the cost.
+- `unit_cost_field=` lets you tell AwesomeO where you're storing the unit_cost of each item, so that you can use the `cost` method on the item, and the `total` method on `Cart`.
+- `quantity_field=` lets you tell AwesomeO where you're storing the quantity of each item.  The `Item#cost` method uses this along with the `unit_cost` field to determine the cost.
 - `redis=` lets you set the redis connection you want to use.  Note that this is not redis connection options, this is an actual instance of `Redis`.
 
 ## Usage
 
-To create a new shopping cart, just call `Cartman::Cart.new(user.id)`.  The parameter for `Cart.new()` is a unique id.  If you don't want a user to have more than one cart at a time, it's generally best to set this to the user's id.  Then to add an item to the cart, just call `cart.add_item(data)` which takes a hash of data that you want to store.  Then to retrieve the items, you just call `cart.items` which will give you an array of all the items they've added.
+To create a new shopping cart, just call `AwesomeO::Cart.new(user.id)`.  The parameter for `Cart.new()` is a unique id.  If you don't want a user to have more than one cart at a time, it's generally best to set this to the user's id.  Then to add an item to the cart, just call `cart.add_item(data)` which takes a hash of data that you want to store.  Then to retrieve the items, you just call `cart.items` which will give you an array of all the items they've added.
 
-The returned Items come back as `Cartman::Item` instances, which have a few special methods to be aware of:
+The returned Items come back as `AwesomeO::Item` instances, which have a few special methods to be aware of:
 
 - `cost` - which will return the `:unit_cost` multiplied by the `:quantity`.
 - `destroy` - which will remove the item from the cart
@@ -53,7 +53,7 @@ The returned Items come back as `Cartman::Item` instances, which have a few spec
 
 The `Cart` object also has some handy methods that you should be aware of:
 
-- `add_item(data)` - which is the life blood of Cartman.  This method takes a hash of data you would like to store with the item.  Here's a few suggestions of keys you may want in your hash:
+- `add_item(data)` - which is the life blood of AwesomeO.  This method takes a hash of data you would like to store with the item.  Here's a few suggestions of keys you may want in your hash:
   - `:id` - (*required*) to store the ID of the model you're adding
   - `:type` - (*required*) to store the class of the model you're adding.
   - `:unit_cost` - This field is required if you want to take advantage of the `Item#cost` method, and the `Cart#total` method.
@@ -78,7 +78,7 @@ Lets walk through an example implementation with a Rails app that has a User mod
 class User < ActiveRecord::Base
   #...
   def cart
-    Cartman::Cart.new(id)
+    AwesomeO::Cart.new(id)
   end
   #...
 end
