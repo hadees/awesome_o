@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ['Evan Alter']
   gem.email         = ['evan.alter@gmail.com']
   gem.description   = 'AwesomeO is a frameworke agnostic, redis-backed, shopping cart system'
+  gem.summary       = 'Originaly forked from the gem Cartman'
   gem.homepage      = 'http://github.com/hadees/awesome-o'
   gem.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
